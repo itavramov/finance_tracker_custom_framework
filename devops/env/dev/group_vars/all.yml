@@ -1,0 +1,18 @@
+---
+project_url: "{{ ansible_host }}"
+
+app_env: dev
+
+ssl_domain: upnetix.tech
+
+remote_user: vagrant
+
+web_host: "{{ hostvars['web_server'].ansible_host }}"
+
+session_host: "{{ hostvars['web_server'].ansible_host }}"
+session_listen_ip: "{{ hostvars['web_server'].ansible_host }}"
+
+db_host: "{{ hostvars['db_server'].ansible_host }}"
+db_user_host: "%"  # from where can db user connect to
+
+#create_dev_admin_for_cms: true

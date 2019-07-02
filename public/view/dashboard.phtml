@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Finance Tracker</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <link rel="stylesheet" href="view/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="view/css/skins/skin-blue.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="view/css/main.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Main Header -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo" id="home_btn">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>F</b>TR</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Finance</b>Tracker</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#">
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!-- The user image in the navbar-->
+                            <img class="user-image" id="user_image_nav" alt="User Image">
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                            <span class="hidden-xs" id="user_name_nav"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- The user image in the menu -->
+                            <li class="user-header">
+                                <img class="img-circle" id="user_image_header" alt="User Image">
+                                <p id="user_info"></p>
+                            </li>
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat" data-toggle="modal"
+                                       data-target="#profileEdit" onclick="showUserData();">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat" onclick="logout();">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <!-- Optionally, you can add icons to the links -->
+                <li id="home"><a href="#"><i class="fa fa-home"></i>
+                    <span>Home</span></a></li>
+                <li id="all_records"><a href="#"><i class="fa fa-link"></i>
+                    <span>All records</span></a></li>
+                <li class="treeview">
+                    <a href="#"> <i class="fa fa-bar-chart"></i> <span>Analysis</span>
+                        <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"  id="donut_btn">Expense donut</a></li>
+                        <li><a href="#" id="trend_btn">Trend incomes</a></li>
+                        <li><a href="#" id="radar_btn">Radar diagram</a></li>
+                        <li><a href="#" id="flow_btn">Cash flow</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-btc"></i> <span>Converters</span>
+                        <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#" id="crypto">Crypto Converter</a></li>
+                        <li><a href="#" id="fiat">Fiat Converter</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div id="main"></div>
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Footer -->
+    <footer></footer>
+</div>
+<!-- MODAL window  EDIT Profile-->
+<div class="modal fade text-dark" id="profileEdit">
+    <form action="<?php echo \Router\Url::generateUrl("userEdit")?>" method="post" enctype="multipart/form-data"
+          onsubmit="return editUserValidation();">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Profile</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" id="new_first_name" class="form-control">
+                    <p id="userFirstAlert" class="form-text"></p>
+                </div>
+                <div class="form-group">
+                    <label for="new_last_name">Last Name</label>
+                    <input type="text" class="form-control" name="last_name" id="new_last_name"
+                           placeholder="Last Name">
+                    <p id="userLastAlert" class="form-text"></p>
+                </div>
+                <div class="form-group">
+                    <label for="new_email">Email address</label>
+                    <input type="email" class="form-control" name="email" id="new_email"
+                           placeholder="Enter email">
+                    <p id="userMailAlert" class="form-text "></p>
+                </div>
+                <div class="form-group">
+                    <label for="new_age">Your Age</label>
+                    <input type="number" class="form-control" name="age" id="new_age" placeholder="Your Age" required>
+                    <p id="userAgeAlert" class="form-text"></p>
+                </div>
+                <div class="form-group">
+                    <label for="new_user_image">File input</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="user_image" id="new_user_image">
+                            <p id="userImageAlert" class="form-text "></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" id="addBudgetBtn">
+                    Edit
+                </button>
+                <input type="hidden" id="user_id" name="user_id">
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+<?php require_once "js.php"?>
+
+<script>
+    $(document).ready(function(){
+        $( "#main" ).load( "view/main.html", function() {
+            fillAccounts();
+            fillBudgets();
+            avgIncome();
+            avgExpense();
+            fillRecordsCategories();
+            fillBudgetsCategories();
+            userHeaderInfo();
+            fillRecordsAccounts();
+            getLastFiveRecords();
+            fillAvgAccounts();
+        });
+       // $('#main').load('view/main.html');
+    });
+    $("#home_btn").click(function(){
+        $('#main').load('view/main.html');
+        fillAccounts();
+        fillBudgets();
+        avgIncome();
+        avgExpense();
+        fillRecordsCategories();
+        fillBudgetsCategories();
+        userHeaderInfo();
+        fillRecordsAccounts();
+        getLastFiveRecords();
+        fillAvgAccounts();
+    });
+    $("#home").click(function(){
+        $('#main').load('view/main.html');
+        fillAccounts();
+        fillBudgets();
+        avgIncome();
+        avgExpense();
+        fillRecordsCategories();
+        fillBudgetsCategories();
+        userHeaderInfo();
+        fillRecordsAccounts();
+        getLastFiveRecords();
+        fillAvgAccounts();
+    });
+    $("#all_records").click(function () {
+        $('#main').load('view/records.html');
+        fillRecordsTable();
+
+    });
+    $('#donut_btn').click(function () {
+        $('#main').load('view/donut_expense.html');
+        defaultExpenseDonut();
+        fillDonutAccounts();
+    })
+    $('#trend_btn').click(function () {
+        $('#main').load('view/trend_income.html');
+        defaultIncomeVsExpense();
+        fillTrendAccounts();
+    })
+    $('#radar_btn').click(function () {
+        $('#main').load('view/radar_diagram.html');
+        defaultRadarDiagram();
+    })
+    $('#flow_btn').click(function () {
+        $('#main').load('view/cash_flow.html');
+        cash();
+        fillCashFlowAccounts();
+    })
+    $('#crypto').click(function () {
+        $('#main').load('view/cryptoConverter.html');
+    })
+    $('#fiat').click(function () {
+        $('#main').load('view/fiatConverter.html');
+        getAllCurrencies();
+        changeCurrencyName('curr_select_1','curr_text_1','hidden_id_1');
+        changeCurrencyName('curr_select_2','curr_text_2','hidden_id_2');
+    })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+<script src="view/js/adminlte.min.js"></script>
+<script src="view/js/budget.js"></script>
+<script src="view/js/app.js"></script>
+<script src="view/js/categories.js"></script>
+<script src="view/js/cashFlowBars.js"></script>
+<script src="view/js/accounts.js"></script>
+<script src="view/js/box_widget.js"></script>
+<script src="view/js/chart.js"></script>
+<script src="view/js/validations.js"></script>
+<script src="view/js/recordJS.js"></script>
+<script src="view/js/logout.js"></script>
+<script src="view/js/users.js"></script>
+<script src="view/js/cryptoConverter.js"></script>
+<script src="view/js/handleErrors.js"></script>
+<script src="view/js/getCurrentDate.js"></script>
+<script src="view/js/fiatConverter.js"></script>
+
+
+</body>
+</html>

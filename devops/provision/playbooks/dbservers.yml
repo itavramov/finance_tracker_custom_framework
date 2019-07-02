@@ -1,0 +1,14 @@
+- hosts: dbservers
+  become: true
+  remote_user: "{{remote_user}}"
+
+  pre_tasks:
+    - debug:
+        msg: "Run on server: {{ ansible_host }}"
+    - name: Load vars
+      include_tasks: tasks/load-vars.yml
+      when: not vars_loaded
+
+  roles:
+    - upnetix.common
+    - upnetix.mysql

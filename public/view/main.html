@@ -1,0 +1,321 @@
+<div id="add_btns">
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addAccount"
+        onclick="resetAccInputs();">Add Account</button>
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addRecord"
+            onclick="fillRecordsCategories(); fillRecordsAccounts(); resetRecordInputs();">Add Record</button>
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addCategory"
+        onclick="resetCategoriesInputs();">Add Category</button>
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addBudget"
+            onclick="fillBudgetsCategories(); resetBudgetsInputs();">Add Budget</button>
+</div>
+<input type="text" value="" hidden id="magicField">
+<div id="accounts_main">
+</div>
+<div id="budgets_main">
+        <h3>Budgets</h3>
+        <hr>
+        <div id="all_budgets_progress" style="background: #fff; cursor: pointer; padding: 5px 10px; width: 100%">
+        </div>
+</div>
+<div class="last_five_records">
+    <div class="box" id="box_content">
+        <div class="box-header with-border">
+            <div class="box-tools pull-right">
+                <!-- Collapse Button -->
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+    </div>
+</div>
+<div class="avgIncomeExpense">
+    <div class="form-group">
+        <label for="accSelect">Accounts</label>
+        <select id="accSelectAvg" class="form-control" onchange="avgIncome(this.value); avgExpense(this.value);">
+            <option selected value="0">All</option>
+        </select>
+    </div>
+    <div id="avgIncome" style="width: 30%; height: 50vh; display: inline-block; vertical-align: top; text-align: center; margin: 20px 20px 20px 20px;">
+        <div class="card text-white bg-info mb-3 mt-3" style="max-width: 18rem;">
+            <div class="card-header">Avg. Income</div>
+            <div class="card-body">
+                <h5 class="card-title" id="avgIncomeField"></h5>
+                <p>BGN</p>
+            </div>
+        </div>
+    </div>
+    <div id="avgExpense" style="width: 30%; height: 50vh; display: inline-block; vertical-align: top; text-align: center; margin: 20px 20px 20px 20px;">
+        <div class="card text-white bg-danger mb-3 mt-3" style="max-width: 18rem;">
+            <div class="card-header">Avg. Expense</div>
+            <div class="card-body">
+                <h5 class="card-title" id="avgExpenseField"></h5>
+                <p>BGN</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL window  ADD BUDGET -->
+<div class="modal fade text-dark" id="addBudget">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Budget</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Budget Name</label>
+                    <input type="text" name="budget_name" id="budgetName" class="form-control">
+                    <p id="budgetNameAlert" class="form-text "></p>
+                </div>
+                <div class="form-group">
+                    <label for="budgetDesc">Budget Description</label>
+                    <textarea class="form-control" id="budgetDesc" name="budget_desc" rows="2"></textarea>
+                    <p id="budgetDescAlert" class="form-text "></p>
+                </div>
+                <div class="form-group">
+                    <label for="categorySelectBudget">Category</label>
+                    <select id="categorySelectBudget" class="form-control">
+                        <option selected value="none">Choose...</option>
+                    </select>
+                    <p id="categorySelectBudgetAlert" class="form-text "></p>
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" step="0.01" name="budget_amount" id="budgetAmount" class="form-control">
+                    <p id="budgetAmountAlert" class="form-text "></p>
+                </div>
+                <div class="form-group">
+                    <label>Starting Date</label>
+                    <input type="date" name="from_date" id="fromDate" class="form-control">
+                    <p id="fromDateAlert" class="form-text "></p>
+                </div>
+                <div class="form-group">
+                    <label>Ending Date</label>
+                    <input type="date" name="to_date" id="toDate" class="form-control">
+                    <p id="toDateAlert" class="form-text "></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" id="addBudgetBtn" onclick="addBudgetSubmit();">
+                    Add Budget
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL window  ADD ACCOUNT -->
+<div class="modal fade text-dark" id="addAccount">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Account</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Account Name</label>
+                    <input type="text" name="acc_name" id="acc_name" class="form-control">
+                    <p id="accNameAlert" class="form-text "></p>
+                </div>
+                <div class="form-group">
+                    <label for="acc_type">Account type</label>
+                    <select id="acc_type" class="form-control">
+                        <option selected value="none">Choose...</option>
+                        <option value="cash">Cash</option>
+                        <option value="common">Common</option>
+                        <option value="bank">Bank</option>
+                    </select>
+                    <p class="form-text" id="accTypeAlert"></p>
+                </div>
+                <div class="form-group">
+                    <label for="acc_currency">Currency</label>
+                    <select id="acc_currency" class="form-control">
+                        <option selected value="none">Choose...</option>
+                        <option value="bgn">BGN</option>
+                        <option value="usd">USD</option>
+                    </select>
+                    <p class="form-text" id="accCurrencyAlert"></p>
+                </div>
+                <div class="form-group">
+                    <label>Balance</label>
+                    <input type="number" step="0.01" name="balance" id="balance" class="form-control">
+                    <p class="form-text" id="balanceAlert"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" onclick="addAccountSubmit();" id="addAccBtn">
+                    Add Account
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL window  ADD RECORD -->
+<div class="modal fade text-dark" id="addRecord">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Record</h5>
+                <button class="close" data-dismiss="modal" id="close_btn"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Record Name</label>
+                    <input type="text" name="record_name" id="recordName" class="form-control">
+                    <p class="form-text" id="recordNameAlert"></p>
+                </div>
+                <div class="form-group">
+                    <label for="recordDesc">Record Description</label>
+                    <textarea class="form-control" id="recordDesc" name="recordDesc" rows="3"></textarea>
+                    <p class="form-text" id="recordDescAlert"></p>
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" step="0.01" name="amount" id="amount" class="form-control">
+                    <p class="form-text" id="amountAlert"></p>
+                </div>
+                <div class="form-group">
+                    <label for="categorySelect">Category</label>
+                    <select id="categorySelect" class="form-control">
+                        <option selected value="none">Choose...</option>
+                    </select>
+                    <p class="form-text" id="categorySelectAlert"></p>
+                </div>
+                <div class="form-group">
+                    <label for="accSelect">Account</label>
+                    <select id="accSelect" class="form-control">
+
+                    </select>
+                    <p class="form-text" id="accSelectAlert"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" id="addRecordBtn" onclick="addRecordSubmit();">
+                    Add Record</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL window  EDIT ACCOUNT -->
+<div class="modal fade text-dark" id="editAccount"><div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Edit Account</h5>
+            <button class="close" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>New Account Name</label>
+                <input type="text" name="acc_name" id="new_acc_name" class="form-control">
+                <p id="new_accNameAlert" class="form-text "></p>
+            </div>
+            <div class="form-group">
+                <label for="new_acc_type">New Account type</label>
+                <select id="new_acc_type" class="form-control">
+                    <option value="cash">Cash</option>
+                    <option value="common">Common</option>
+                    <option value="bank">Bank</option>
+                </select>
+                <p class="form-text" id="new_accTypeAlert"></p>
+            </div>
+            <div class="form-group">
+                <label for="acc_currency">New Currency</label>
+                <select id="new_acc_currency" class="form-control">
+                    <option value="bgn">BGN</option>
+                    <option value="usd">USD</option>
+                </select>
+                <p class="form-text" id="new_accCurrencyAlert"></p>
+            </div>
+            <div class="form-group">
+                <label>New Balance</label>
+                <input type="number" step="0.01" name="balance" id="new_balance" class="form-control">
+                <p class="form-text" id="new_balanceAlert"></p>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <input type="text" hidden id="editHidden">
+                <button class="btn btn-primary btn-block" id="editAccBtn" onclick="editAccount();">Edit Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL window  ADD CATEGORY -->
+<div class="modal fade text-dark" id="addCategory">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Category</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input type="text" name="cat_name" id="categoryName" class="form-control">
+                    <p class="form-text" id="categoryNameAlert"></p>
+                </div>
+                <div class="form-group">
+                    <label for="categoryType">Category type</label>
+                    <select id="categoryType" class="form-control">
+                        <option selected value="none">Choose...</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                    <p class="form-text" id="categoryTypeAlert"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" id="addCategoryBtn" onclick="addCategorySubmit();">
+                    Add Category</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL window DELETE ACC -->
+<div class="modal fade text-dark" id="deleteAcc">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Budget Confirmation</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>PLEASE TYPE 'DELETE' FOR CONFIRMATION</label>
+                    <input type="text" name="cat_name" id="deleteConf" class="form-control">
+                    <p class="form-text" id=""></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-block" data-dismiss="modal" onclick="deleteAccount();">
+                    Delete Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL window DELETE BUDGET -->
+<div class="modal fade text-dark" id="deleteBudget">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Account Confirmation</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>PLEASE TYPE 'DELETE' FOR CONFIRMATION</label>
+                    <input type="text" name="cat_name" id="deleteConfBud" class="form-control">
+                    <p class="form-text"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-block" data-dismiss="modal" onclick="deleteBudget();">
+                    Delete Budget</button>
+            </div>
+        </div>
+    </div>
+</div>

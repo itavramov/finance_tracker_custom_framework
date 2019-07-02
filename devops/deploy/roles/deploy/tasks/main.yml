@@ -1,0 +1,20 @@
+# Deploy project
+# Vagrant/Ansible Project
+# Tzvetan Tzvetkov <tzvetan.tzvetkov@upnetix.com>
+
+- name: Deploy code to remote machine
+  synchronize:
+    src: "{{ playbook_dir }}/../../"
+    dest: "{{ project_root }}"
+    checksum: yes
+    delete: yes
+    recursive: yes
+    verify_host: false
+    rsync_opts:
+#      - "--exclude=app/config/app.php"
+      - "--chown=www-data:www-data"
+  register: rsync_result
+
+- name: View synced files
+  debug:
+    var: rsync_result.stdout_lines

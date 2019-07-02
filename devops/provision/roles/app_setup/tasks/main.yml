@@ -1,0 +1,12 @@
+# Upnetix.com Site Project configuration
+# Vagrant/Ansible Project
+# Tzvetan Tzvetkov <tzvetan.tzvetkov@upnetix.com>
+
+- name: Set environment config file
+  template:
+    src: Constants.php
+    dest: "{{ project_root }}/util/Constants.php"
+
+#- name: Set up cronjobs
+#  include_tasks: cron.yml
+#  when: setup_cronjobs | default(false)

@@ -1,0 +1,19 @@
+---
+
+- cronvar:
+    name: HOME
+    value: "{{ project_root }}/console/cron"
+    cron_file: "{{ project_name }}"
+
+#- cronvar:
+#    name: MAILTO
+#    value: "username@upnetix.com"
+#    cron_file: "{{ project_name }}"
+
+#- cron:
+#    name: Send Notification (Task / Team / Leave)
+#    user: www-data
+#    minute: 0
+#    hour: 7
+#    job: "php cron.php run Notification > /dev/null 2>&1"
+#    cron_file: "{{ project_name }}"

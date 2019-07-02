@@ -1,0 +1,32 @@
+# Vagrant/Ansible Project
+# Tzvetan Tzvetkov <tzvetan.tzvetkov@upnetix.com>
+
+- src: git+ssh://git@bitbucket.upnetix.com:7999/devops/ansible-role-common.git
+  name: upnetix.common
+  version: 1.0.2
+
+- src: git+ssh://git@bitbucket.upnetix.com:7999/devops/ansible-role-apache2.git
+  name: upnetix.apache2
+  version: 1.0.3
+
+- src: git+ssh://git@bitbucket.upnetix.com:7999/devops/ansible-role-mysql.git
+  name: upnetix.mysql
+  version: 1.0.1
+
+- src: git+ssh://git@bitbucket.upnetix.com:7999/devops/ansible-role-mysql-db-migrations.git
+  name: upnetix.db_migrations
+  version: 1.0.0
+
+- src: git+ssh://git@bitbucket.upnetix.com:7999/devops/ansible-role-php73.git
+  name: upnetix.php73
+  version: 1.0.1
+
+- src: git+ssh://git@bitbucket.upnetix.com:7999/devops/ansible-role-memcached.git
+  name: upnetix.memcached
+  version: 1.0.0
+
+- src: git+ssh://git@bitbucket.upnetix.com:7999/devops/ansible-role-ssmtp.git
+  name: upnetix.ssmtp
+  version: 1.0.0
+
+

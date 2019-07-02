@@ -1,0 +1,16 @@
+---
+project_url: "test-{{ project_name }}.upnetix.tech"
+
+app_env: test
+
+ssl_domain: upnetix.tech
+
+remote_user: ubuntu
+
+web_host: "{{ hostvars['web_server'].ansible_host }}"
+
+session_host: localhost # "{{ hostvars['web_server'].ansible_host }}"
+session_listen_ip: 127.0.0.1 # "{{ hostvars['web_server'].ansible_host }}"
+
+db_host: "{{ hostvars['db_server'].ansible_host }}"
+db_user_host: "%" # "{{ hostvars['web_server'].ansible_host }}"  # from where can db user connect to

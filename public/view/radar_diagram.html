@@ -1,0 +1,79 @@
+<div style="display: flex">
+    <div id="compareDiagram" class="donutChart">
+        <span class = "label chart-span">Radar Diagram - Compare Expenses</span>
+
+        <canvas id="radarDiagram"></canvas>
+    </div>
+    <div class="card bg-info mt-5" style="width: 18rem;">
+        <div class="card-header">
+            Compare Periods
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">First Compare Period:</li>
+            <li class="list-group-item">
+            <input type="text" id="datepicker1" name="daterange1"  />
+            </li>
+            <li class="list-group-item">Second Compare Period:</li>
+            <li class="list-group-item">
+                <input type="text" name="daterange2" value="01/01/2018 - 01/15/2018"  />
+            </li>
+        </ul>
+    </div>
+    <div class="card text-white bg-info mt-5 ml-3" style="max-width: 18rem;">
+        <div class="card-header">Compare Radar Diagram</div>
+        <div class="card-body">
+            <h5 class="card-title">Info:</h5>
+            <p class="card-text">-This diagram gives you a chance to compare your expenses by period of time
+            with interesting and interactive way.</p>
+            <p>-By default there is no second compare period.</p>
+            <p>-By default the first compare period is for the last 30 days.</p>
+
+        </div>
+    </div>
+</div>
+<script>
+    var arr = getCurrDate();
+
+    Chart.defaults.scale.ticks.beginAtZero = true;
+    var chart  = document.getElementById("radarDiagram");
+    var labels = [];
+    var data   = [
+        {},
+        {}
+    ];
+    $('input[name="daterange1"]').daterangepicker({
+        opens: 'left',
+        "startDate": arr.start_date,
+        "endDate": arr.end_date,
+    }, function(start, end, label) {
+        var start_date = start.format('YYYY-MM-DD');
+        var end_date = end.format('YYYY-MM-DD');
+        var radarDiagram = new Chart(chart,{
+            type: 'radar',
+            data:{
+                labels: labels,
+                datasets: data,
+            }
+        });
+        firstCompareRadar(start_date,end_date,radarDiagram);
+    });
+
+    $('input[name="daterange2"]').daterangepicker({
+        opens: 'left',
+        "startDate": arr.start_date,
+        "endDate": arr.end_date,
+    }, function(start, end, label) {
+        var start_date = start.format('YYYY-MM-DD');
+        var end_date = end.format('YYYY-MM-DD');
+        var radarDiagram = new Chart(chart,{
+            type: 'radar',
+            data:{
+                labels: labels,
+                datasets: data,
+            }
+        });
+        secondCompareRadar(start_date,end_date,radarDiagram);
+    });
+
+
+</script>

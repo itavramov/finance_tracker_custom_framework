@@ -1,0 +1,24 @@
+#build_host: "{{ lookup('env','BUILD_ENV') or 'dev' }}-{{ project_name }}-build.upnetix.tech"
+build_host: "build-{{ project_name }}.upnetix.tech"
+
+nodejs_version: "8.x"
+#nodejs_install_npm_user: "{{ ansible_ssh_user }}"
+nodejs_install_npm_user: "vagrant"
+npm_config_prefix: "/home/vagrant/.npm-global"
+npm_config_unsafe_perm: "true"
+
+nodejs_npm_global_packages:
+  - name: gulp
+  - name: gulp-sass
+#  - name: concurrently
+#  - name: lite-server
+#  - name: typings
+#    version: 0.8.1
+
+nodejs_package_json_path: "{{ project_root }}/public"
+
+php_additional_package_list: [
+  php7.2-xml,
+]
+
+php_ini_file: ""

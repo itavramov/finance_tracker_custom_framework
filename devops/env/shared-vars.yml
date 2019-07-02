@@ -1,0 +1,39 @@
+project_name: 'finance-tracker'
+project_root: "/var/www/finance-tracker"
+database_source_file_name: 'finance.zip'
+
+system_additional_package_list: [
+  unzip
+]
+
+php_additional_package_list: [
+ libapache2-mod-php7.3,
+ php7.3-mysql,
+ php7.3-xml,
+ php7.3-memcached,
+ php7.3-zip,
+]
+
+php_ini_file: "{{ playbook_dir }}/../templates/php7.3.ini.tpl"
+
+mysql_vendor: mysql
+mysql_origin: upstream
+mysql_upstream_version: 8.0
+mysql_root_password: "{{ vault.db_root_pass }}"
+
+mysql_database_name: "{{ project_name | regex_replace('\\.', '_') }}"
+mysql_database_source_file: "{{ playbook_dir }}/../files/{{ database_source_file_name }}"
+mysql_database_target_file: "/tmp/{{ project_name }}.sql.gz"
+
+mysql_database_user_name: "{{ project_name }}"
+mysql_database_user_pass: "{{ vault.db_user_pass }}"
+mysql_database_user_privileges: "{{ mysql_database_name }}.*:ALL"
+mysql_database_user_host: "{{ db_user_host }}"
+
+mysql_additional_package_list: [
+  python3-mysqldb
+]
+
+memcached_port: 11211
+memcached_listen_ip: "{{ session_listen_ip }}"
+#memcached_log_verbosity: "-vv"

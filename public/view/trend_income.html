@@ -1,0 +1,52 @@
+<div style="display: flex">
+    <div id="compareDiagram" class="donutChart">
+        <span class = "label chart-span">Trend incomes</span>
+        <canvas id="incomeVsExpenseLineChart"></canvas>
+    </div>
+    <div class="card bg-info mt-5" style="width: 18rem;">
+        <div class="card-header">
+            Featutes:
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Select Date:</li>
+            <li class="list-group-item">
+                <input type="text" name="daterange" id="trendDate">
+            </li>
+            <li class="list-group-item">Select Account:</li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <label for="accSelectTrend">Accounts</label>
+                    <select id="accSelectTrend" class="form-control" onchange="changeAccTrend(this.value);">
+                        <option selected value="0">All</option>
+                    </select>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="card text-white bg-info mt-5 ml-3" style="max-width: 18rem;">
+        <div class="card-header">Line Diagram</div>
+        <div class="card-body">
+            <h5 class="card-title">Info:</h5>
+            <p class="card-text">-This diagram gives you statistics for your revenue against costs
+                in the selected period.</p>
+            <p>-By default the period is for the last 30 days.</p>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        var arr = getCurrDate();
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left',
+            "startDate" : arr.start_date,
+            "endDate" : arr.end_date
+        }, function(start, end) {
+            var acc_id = document.getElementById("accSelectTrend").value;
+            if(!acc_id){
+                acc_id = 0;
+            }
+            incomeVsExpenseLineChart(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'), acc_id);
+        });
+    })
+</script>

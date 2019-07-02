@@ -1,0 +1,18 @@
+# Build project
+# Vagrant/Ansible Project
+# Tzvetan Tzvetkov <tzvetan.tzvetkov@upnetix.com>
+
+- name: Install Composer's dependencies
+  composer:
+    working_dir: "{{ project_root }}"
+
+#- name: Build project (run gulp)
+#  command: "{{ npm_config_prefix }}/bin/gulp build"
+#  args:
+#    chdir: "{{ project_root }}/public/"
+#  environment:
+#      NPM_CONFIG_PREFIX: "{{ npm_config_prefix }}"
+#      NODE_PATH: "{{ npm_config_prefix }}/lib/node_modules"
+#      NPM_CONFIG_UNSAFE_PERM: "{{ npm_config_unsafe_perm }}"
+
+
